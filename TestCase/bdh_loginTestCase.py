@@ -143,13 +143,10 @@ class login_bdh(unittest.TestCase):
         time.sleep(2)
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
         print('账号不为空，密码少于6-登录测试，正常')
-
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号不为空，密码少于6，登录异常')
         print('账号不为空，密码少于6-登录测试，正常')
-
         time.sleep(1)
-
         #账号不存在
         username_input.clear()
         username_input.send_keys('dinghuohui110')
@@ -230,6 +227,7 @@ class login_bdh(unittest.TestCase):
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号密码为空登录异常')
+        print('品牌经济人-账号密码为空登录测试-pass')
         time.sleep(1)
 
         # 账号不为空，密码为空
@@ -242,6 +240,8 @@ class login_bdh(unittest.TestCase):
         self.driver.find_element_by_class_name('yellow').click()
         # 验证登录失败
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
+        print('品牌经济人-账号不为空，密码为空登录测试-pass')
+
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号不为空，密码为空,出现异常')
         time.sleep(1)
@@ -253,6 +253,7 @@ class login_bdh(unittest.TestCase):
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号不为空，密码少于6，登录异常')
+        print('品牌经济人-账号不为空，密码少于6登录测试-pass')
         time.sleep(1)
 
         # 账号不存在
@@ -266,6 +267,7 @@ class login_bdh(unittest.TestCase):
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号不存在，登录异常')
+        print('品牌经济人-账号不存在登录测试-pass')
         time.sleep(1)
 
         # 账号存在，密码错误
@@ -273,11 +275,13 @@ class login_bdh(unittest.TestCase):
         username_input.send_keys(config.TEST_BRAND_ACCOUNT[0])
         password_input.clear()
         password_input.send_keys('abcd1234')
+
         # 验证登录失败
         time.sleep(2)
         self.assertTrue(PF.login_fail(self.driver), u'测试异常登录，出错')
         login_button = self.driver.find_element_by_class_name("yellow").text
         self.assertEqual(login_button, u'进入系统', u'账号存在，密码错误')
+        print('品牌经济人-账号存在，密码错误登录测试-pass')
         time.sleep(1)
 
     @Public.ErrorHandle
@@ -302,6 +306,7 @@ class login_bdh(unittest.TestCase):
         element = WebDriverWait(self.driver, 25).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "#mainHeader > div.pull-left.name-wrapper > div.ovh")))
         self.assertIn(config.TEST_BRAND_ACCOUNT[2], element.text)
+        print('登录后，验证界面是否有经纪人账号-pass')
         self.assertIn(u"退出", element.text)
         time.sleep(2)
         self.assertTrue(PF.login_success(self.driver), u'登录失败')
@@ -310,13 +315,17 @@ class login_bdh(unittest.TestCase):
         #验证订单审核，存在侧边栏列表中
         order_eidt = self.driver.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/div[1]/div[2]/div[2]/div[1]/ul/li[8]/a')
         self.assertEqual(order_eidt.text.strip(),u'订单审核')
+        print('验证品牌经纪人侧边栏存在订单审核功能-pass')
+
         element = self.driver.find_elements_by_xpath('//*[@id="app"]/div/div[1]/div/div[1]/div[2]/div[2]/div[1]/ul/li')
         #验证u'明星店铺',u'收藏评款',u'异常订单'，不存在侧边栏列表中
         side_tag = [u'明星店铺',u'收藏评款',u'异常订单']
         for tag in side_tag:
             for e in element:
                 if e.text.strip() in side_tag:
-                    self.assertTrue(False,tag+',存在品牌经纪人侧边栏列表中')
+                    self.assertTrue(False,tag+u',存在品牌经纪人侧边栏列表中')
+        print('验证品牌经纪人侧边栏没有-明显店铺、收藏评款、异常订单-pass')
+
         # login_cookies=self.driver.get_cookies()
         #退出账号
         self.driver.find_element_by_css_selector("#mainHeader > div.pull-left.name-wrapper > div.ovh > a").click()

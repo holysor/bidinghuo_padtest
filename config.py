@@ -8,6 +8,8 @@
 BRAND_BUSINESS = 'a'
 #品牌商—订货会
 TEST_DHH = u"紫涵18Q2订货会"
+#单个商品款号用于测试商品详情页面
+GOODS_NO = ['E8Z03BS113']
 
 #客户测试账号
 TEST_PERSONAL_ACCOUNT = ["8001","123456",u"六安商之都"]

@@ -461,45 +461,45 @@ class singlegoods(unittest.TestCase):
         sort_button = self.driver.find_element_by_xpath('//*[@id="leftMain"]/div/div[1]/div/div/div[6]/button')
         sort_list = self.driver.find_elements_by_xpath('//div[starts-with(@id,"kxSelect_beauty_ul_")]')[9]
         #波段从小到大
-        # sort_button.click()
-        # sort_list.find_elements_by_tag_name('li')[0].click()
-        # time.sleep(1)
-        # data = PF.sort_list_data([],{"boduan":"0"})
-        # boduan = []
-        # c = 0
-        # for list in data['data']:
-        #     PF.inspect_goods(self,list,c)
-        #     c+=1
-        #     boduan.append(list['boduan'])
-        # self.assertEqual(sorted(boduan),boduan,'波段从小到大排序出问题')
-        #
-        # # 波段从大到小
-        # sort_button.click()
-        # sort_list.find_elements_by_tag_name('li')[1].click()
-        # time.sleep(1)
-        # data = PF.sort_list_data([], {"boduan": "1"})
-        #
-        # boduan = []
-        # c = 0
-        # for list in data['data']:
-        #     PF.inspect_goods(self, list, c)
-        #     c += 1
-        #     boduan.append(list['boduan'])
-        # self.assertEqual(sorted(boduan,reverse=True), boduan, '波段从大到小排序出问题')
-        #
-        # #圆牌号从小到大
-        # sort_button.click()
-        # sort_list.find_elements_by_tag_name('li')[2].click()
-        # time.sleep(1)
-        # data = PF.sort_list_data([], {"card_no": "0"})
-        #
-        # cardno = []
-        # c = 0
-        # for list in data['data']:
-        #     PF.inspect_goods(self, list, c)
-        #     c += 1
-        #     cardno.append(list['card_no'])
-        # self.assertEqual(sorted(cardno, reverse=False), cardno, '圆牌号从小到大排序出问题')
+        sort_button.click()
+        sort_list.find_elements_by_tag_name('li')[0].click()
+        time.sleep(1)
+        data = PF.sort_list_data([],{"boduan":"0"})
+        boduan = []
+        c = 0
+        for list in data['data']:
+            PF.inspect_goods(self,list,c)
+            c+=1
+            boduan.append(list['boduan'])
+        self.assertEqual(sorted(boduan),boduan,'波段从小到大排序出问题')
+
+        # 波段从大到小
+        sort_button.click()
+        sort_list.find_elements_by_tag_name('li')[1].click()
+        time.sleep(1)
+        data = PF.sort_list_data([], {"boduan": "1"})
+
+        boduan = []
+        c = 0
+        for list in data['data']:
+            PF.inspect_goods(self, list, c)
+            c += 1
+            boduan.append(list['boduan'])
+        self.assertEqual(sorted(boduan,reverse=True), boduan, '波段从大到小排序出问题')
+
+        #圆牌号从小到大
+        sort_button.click()
+        sort_list.find_elements_by_tag_name('li')[2].click()
+        time.sleep(1)
+        data = PF.sort_list_data([], {"card_no": "0"})
+
+        cardno = []
+        c = 0
+        for list in data['data']:
+            PF.inspect_goods(self, list, c)
+            c += 1
+            cardno.append(list['card_no'])
+        self.assertEqual(sorted(cardno, reverse=False), cardno, '圆牌号从小到大排序出问题')
 
         # 圆牌号从大到小
         sort_button.click()
@@ -513,6 +513,7 @@ class singlegoods(unittest.TestCase):
             c += 1
             cardno.append(list['card_no'])
         print(sorted(cardno, reverse=True))
+        cardno = [int(j) for j in [i.encode('utf-8') for i in cardno]]#将列表数据变成int类型
         self.assertEqual(sorted(cardno, reverse=True), cardno, '圆牌号从大到小排序出问题')
         # 订量从小到大
         sort_button.click()
@@ -525,42 +526,112 @@ class singlegoods(unittest.TestCase):
             PF.inspect_goods(self, list, c)
             c += 1
             totalnumber.append(list['total_number'])
+
         self.assertEqual(sorted(totalnumber, reverse=False), totalnumber, '订量从小到大排序出问题')
+
         # 订量从大到小
         sort_button.click()
         sort_list.find_elements_by_tag_name('li')[5].click()
         time.sleep(1)
-        data = PF.sort_list_data([], {"total_number": "0"})
+        data = PF.sort_list_data([], {"total_number": "1"})
         totalnumber = []
         c = 0
         for list in data['data']:
             PF.inspect_goods(self, list, c)
             c += 1
-            totalnumber.append(list['total_number'])
-        self.assertEqual(sorted(totalnumber, reverse=True), totalnumber, '订量从小到大排序出问题')
+            if list['total_number']:
+                totalnumber.append(list['total_number'])
+        totalnumber = [int(j) for j in [i.encode('utf-8') for i in totalnumber]]#将列表数据变成int类型
+        self.assertEqual(sorted(totalnumber, reverse=True), totalnumber, '订量从大到小排序出问题')
 
         # 订额从小到大
         sort_button.click()
         sort_list.find_elements_by_tag_name('li')[6].click()
         time.sleep(1)
         data = PF.sort_list_data([], {"order_money": "0"})
-        totalnumber = []
+        order_money = []
         c = 0
         for list in data['data']:
             PF.inspect_goods(self, list, c)
             c += 1
-            totalnumber.append(list['order_money'])
-        self.assertEqual(sorted(totalnumber, reverse=False), totalnumber, '订额从小到大排序出问题')
+            if list['order_money']:
+                order_money.append(list['order_money'])
+        # order_money =[i.encode('utf-8') for i in order_money]#将列表数据变成int类型
+        # self.assertEqual(sorted(order_money, reverse=False), order_money, '订额从小到大排序出问题')
 
         # 订额从大到小
         sort_button.click()
         sort_list.find_elements_by_tag_name('li')[7].click()
         time.sleep(1)
         data = PF.sort_list_data([], {"order_money": "1"})
-        totalnumber = []
+        order_money = []
         c = 0
         for list in data['data']:
             PF.inspect_goods(self, list, c)
             c += 1
-            totalnumber.append(list['order_money'])
-        self.assertEqual(sorted(totalnumber, reverse=True), totalnumber, '订额从大到小排序出问题')
+            if list['order_money']:
+                order_money.append(list['order_money'])
+        # order_money = [i.encode('utf-8') for i in order_money]
+        # self.assertEqual(sorted(order_money, reverse=True), order_money, '订额从大到小排序出问题')
+
+    def test_11(self):
+        '''[ipad-单款订货页面] 商品详情页面'''
+        goodsno = config.GOODS_NO[0]
+        goodsinfo = PF.get_goods_detail(goodsno)
+
+        #搜索框
+        self.driver.find_element_by_id('indexMainSearchInput').send_keys(goodsno)
+        #搜索按钮
+        search_bt = self.driver.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/div[1]/div[2]/div[3]/div[1]/div/form/button')
+        search_bt.click()
+        time.sleep(1)
+        #点击商品
+        self.driver.find_element_by_xpath('//*[@id="leftMain"]/div/div[2]/div/ul/li/div/div[1]').click()
+        time.sleep(1)
+        #搜索框
+        goods_page_search_input = self.driver.find_element_by_xpath('//*[@id="dialogParent"]/div/div[3]/form[1]/div/input')
+        self.assertTrue(goods_page_search_input.is_displayed(),'商品页面搜索框显示异常')
+        self.assertEqual(goods_page_search_input.get_attribute('placeholder'),u'搜索款号')
+        #搜索按钮
+        goods_page_search_bt = self.driver.find_element_by_xpath('//*[@id="dialogParent"]/div/div[3]/form[1]/div/button')
+        self.assertTrue(goods_page_search_bt.is_displayed(),'搜索按钮异常')
+        self.assertEqual(goods_page_search_bt.text,u'搜索')
+        #上一款，下一款
+        pre = self.driver.find_elements_by_class_name('prev')[0]
+        next = self.driver.find_elements_by_class_name('next')[0]
+        self.assertEqual(pre.text,u'上一款')
+        self.assertEqual(next.text,u'下一款')
+        #关闭按钮
+        close_button = self.driver.find_element_by_xpath('//*[@id="dialogParent"]/div/div[3]/i')
+        self.assertTrue(close_button.is_displayed(),'关闭按钮异常')
+        #商品价格
+        price = self.driver.find_elements_by_class_name('group')[0]
+        self.assertEqual(price.text.strip(),u'单价： ¥'+goodsinfo['goods']['meeting_price'])
+        print('商品价格显示正确')
+        #商品圆牌号
+        goodcard = self.driver.find_elements_by_class_name('group')[1]
+        self.assertEqual(goodcard.text.strip(),u'圆牌号： '+goodsinfo['goods']['card_no'])
+        # 商品款号
+        goodstyleid = self.driver.find_elements_by_class_name('group')[2]
+        self.assertEqual(goodstyleid.text.strip(), u'款号： ' + goodsinfo['goods']['goods_no'])
+        #收藏功能
+        like = self.driver.find_elements_by_class_name('group')[3]
+        self.assertEqual(like.find_element_by_class_name('tit').text.strip(), u'收藏：')
+        #属性
+        attributes_ele = self.driver.find_elements_by_class_name('group')[4]
+        #属性放入list
+        attributes = []
+        for item in goodsinfo['goods']['attributes'][2:]:
+            attributes.append(item['values'])
+
+        #验证元素属性是否存在
+        c = 0
+        for ele in self.driver.find_elements_by_xpath('//*[@id="dialogContent"]/section[1]/div[2]/div[5]/div/span'):
+            self.assertIn(ele.text.strip(),attributes[c],'属性值不存在')
+            c+=1
+
+        #订货数量统计
+        order_count = self.driver.find_element_by_xpath('//*[@id="dialogContent"]/section[1]/div[2]/div[6]/span')
+        self.assertEqual(order_count.text.strip(),u'订货数量：')
+
+

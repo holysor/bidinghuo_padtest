@@ -38,7 +38,7 @@ def outPutWithHTML(testcase):
     filename = os.getcwd()+os.sep+'result'+ os.sep + day + '/result.html'
     runner = HTMLTestReport.HTMLTestRunner(title=u'必订火',
                                            description=u'必订火-自动化测试报告',
-                                           stream=open(filename,"wb"),verbosity=2,retry=0)
+                                           stream=open(filename,"wb"),verbosity=2,retry=1)
     runner.run(testcase)
 
 if __name__ == '__main__':

@@ -175,8 +175,28 @@ def search_data(keyword):
     res = requests.post(url, headers=headers,data=json.dumps(data))
     need_data = json.loads(res.content)
     return need_data
+#获取商品详情页面信息
+def get_goods_detail(goodsno):
 
+    data = search_data(goodsno)['data'][0]
+    good_id = data['id']
+    good_data = 'http://%s.bdh.com/wapi/goods/info.json?id=%s&goods_no=' % (config.BRAND_BUSINESS, good_id)
 
+    headers = {
+        'Host': 'a.bdh.com',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9',
+        # 'Content-Type': 'application/json;charset=UTF-8',
+        'Cookie': config.USER_COOKIE,
+        'Origin': 'http://a.bdh.com',
+        'Referer': 'http://a.bdh.com/main/ordering/singal',
+        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+        'Proxy-Connection': 'keep-alive'
+    }
+    result = requests.get(good_data, headers=headers)
+    need_data = json.loads(result.content)
+    return need_data
 #获取单款页面筛选数据
 def dh_bar():
     url = config.DH_BAR
@@ -309,7 +329,7 @@ def select_assert(self,select_button,select_list):
             if set(goods_property_text) & set(element_property):  # 判断属性值是否存在筛选栏
                 pass
             else:
-                self.assertTrue(False, '全选结果中有不存在的季节')
+                self.assertTrue(False, '全选结果中有不存在的项目')
             time.sleep(1)
             self.driver.find_element_by_css_selector('#dialogParent > div > div.mod-head.clearfix > i').click()
             time.sleep(1)
@@ -355,4 +375,5 @@ def single_select_assert(self,select_button,select_list):
 if __name__=='__main__':
     # homepage_data()
     # list_data()
-    dh_bar()
+    # dh_bar()
+    get_goods_detail(config.GOODS_NO[0])
