@@ -619,7 +619,7 @@ class singlegoods(unittest.TestCase):
         self.assertEqual(like.find_element_by_class_name('tit').text.strip(), u'收藏：')
         #属性
         attributes_ele = self.driver.find_elements_by_class_name('group')[4]
-        #属性放入list
+        #商品属性属性放入list
         attributes = []
         for item in goodsinfo['goods']['attributes'][2:]:
             attributes.append(item['values'])
@@ -631,7 +631,22 @@ class singlegoods(unittest.TestCase):
             c+=1
 
         #订货数量统计
-        order_count = self.driver.find_element_by_xpath('//*[@id="dialogContent"]/section[1]/div[2]/div[6]/span')
-        self.assertEqual(order_count.text.strip(),u'订货数量：')
+        order_count_name = self.driver.find_element_by_xpath('//*[@id="dialogContent"]/section[1]/div[2]/div[6]/span')
+        color_and_ruler = self.driver.find_element_by_xpath('//*[@id="dialogContent"]/section[1]/div[2]/div[6]/div/table/tr[1]')
+
+
+        goodssize =  goodsinfo['goods']['size'].split(',')
+        goodscolor = []
+        for item in goodsinfo['goods']['attributes']:
+            if item['name']==u'颜色':
+                goodscolor = item['values']
+
+        print(color_and_ruler.text.strip(),goodscolor)
+        for item in goodssize:
+            self.assertIn(item,color_and_ruler.text.strip(),'尺码组异常')
+        self.assertEqual(order_count_name.text.strip(),u'订货数量：')
+        for item in goodscolor:
+            self.assertIn(item,goodscolor,u'颜色组异常')
+
 
 

@@ -44,6 +44,6 @@ def outPutWithHTML(testcase):
 if __name__ == '__main__':
     testsuite = unittest.TestSuite()
     # testsuite.addTest(TestForReportTestCase.Test('test_fail1'))
-    outPutWithHTML(all_case())
+    outPutWithHTML(all_case() )
     # runner = unittest.TextTestRunner(verbosity=2)
     # runner.run(all_case())
